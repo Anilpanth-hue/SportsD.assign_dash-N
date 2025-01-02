@@ -1,8 +1,8 @@
 export interface NewsArticle {
     title: string
-    description: string
+    description: string | null;
     url: string
-    urlToImage: string
+    urlToImage: string | null;
     publishedAt: string
     source: {
       name: string
@@ -10,9 +10,9 @@ export interface NewsArticle {
   }
   
   export interface NewsResponse {
-    articles: NewsArticle[]
-    totalResults: number
     status: string
+    totalResults: number
+    articles: NewsArticle[]
   }
   
   

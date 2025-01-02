@@ -3,12 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { NewsArticle } from "@/types/news"
 
 interface ArticlesOverviewProps {
-  articles: NewsArticle[],
-  totalArticles: NewsArticle[]
-  
+  articles: NewsArticle[]
+  totalResults: number
 }
 
-export function OverviewCards({ articles }: ArticlesOverviewProps) {
+export function OverviewCards({ articles, totalResults }: ArticlesOverviewProps) {
+  // Ensure we have valid numbers
+  const articleCount = articles?.length || 0
+  const totalArticleCount = totalResults || 0
+  
+  console.log("OverviewCards received:", { articleCount, totalArticleCount }) // Debug log
+
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <Card className="overflow-hidden">
@@ -17,12 +22,15 @@ export function OverviewCards({ articles }: ArticlesOverviewProps) {
           <FileText className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{articles.length}</div>
+          <div className="text-2xl font-bold">{totalArticleCount}</div>
           <div className="text-xs text-muted-foreground">
             +20.1% from last month
           </div>
           <div className="mt-4 h-1 w-full rounded-full bg-muted">
-            <div className="h-1 w-[75%] rounded-full bg-primary" />
+            <div 
+              className="h-1 rounded-full bg-primary" 
+              style={{ width: `${Math.min((totalArticleCount / 100) * 100, 100)}%` }}
+            />
           </div>
         </CardContent>
       </Card>
@@ -32,12 +40,15 @@ export function OverviewCards({ articles }: ArticlesOverviewProps) {
           <TrendingUp className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{Math.floor(articles.length * 0.6)}</div>
+          <div className="text-2xl font-bold">{articleCount}</div>
           <div className="text-xs text-muted-foreground">
             +12.5% from last month
           </div>
           <div className="mt-4 h-1 w-full rounded-full bg-muted">
-            <div className="h-1 w-[60%] rounded-full bg-primary" />
+            <div 
+              className="h-1 rounded-full bg-primary"
+              style={{ width: `${Math.min((articleCount / 100) * 100, 100)}%` }}
+            />
           </div>
         </CardContent>
       </Card>
